@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 
 info = {'имя': 'Анастасия', 'отчество':'Александровна', 'фамилия':'Дудченко', 'телефон':'8-923-600-03-03', 'email':'andud@mail.ru'}
 items = [
@@ -11,35 +11,20 @@ items = [
 ]
 
 
+
 def home(request):
-    return render(request, 'index.html')
+    return render(request, "index.html")
 
 
 def about(request):
-    text = f"""Имя: <b>{info['имя']}</b><br>
-            Отчество: <b>{info['отчество']}</b><br>
-            Фамилия: <b>{info['фамилия']}</b><br>
-            телефон: <b>{info['телефон']}</b><br>
-            email: <b>{info['email']}<br>"""
-    return HttpResponse (text)
+    return render (request, "about.html", {"info": info})
 
 def get_item(request, id):
-
     for i in range(len(items)):
         if items[i]["id"] == id:
-            return HttpResponse(f'<b>Название:</b> {items[i]["name"]}, <b>Количество:</b> {items[i]["quantity"]}<br><a href = "../items">назад к списку товаров</a>')
-    
-    return HttpResponse(f'Товар с id={id} не найден<br><a href = "../items">назад к списку товаров</a>')
+            return render(request, "item.html", {"name":items[i]["name"], "count": items[i]["quantity"]})
 
 def get_items(request):
-
-    text = "<ol>"
-
-    for i in range(len(items)):
-        text+=f'<li><a href = "item/{items[i]["id"]}">{items[i]["name"]}</a></li>'
-
-    text+="</ol>"
-
-    return HttpResponse(text)
+    return  render(request, "items_list.html",  {"items":items})
 
     
