@@ -8,8 +8,8 @@
     / <a href="../..">Home</a> / <a href="../../items">Items</a> / <a href="../../about">About</a> /
     <br>
     <br>
-        {% if  count %}
-            <b>Название:</b> {{name}}, <b>Количество: </b>{{count}}
+        {% if  item.count %}
+            <b>Название:</b> {{item.name}}, <b>Количество: </b>{{item.count}}
         {% else %}
             Товар отсутсвует
         {% endif %}
